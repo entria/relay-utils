@@ -1,7 +1,9 @@
 // @flow
 import get from 'lodash/get';
 
-function getData(queryProps: Object, key) {
+import type { ConnectionData } from './interfaces';
+
+function getData(queryProps: Object, key): ConnectionData {
   if (!queryProps) {
     return {
       edges: [],
