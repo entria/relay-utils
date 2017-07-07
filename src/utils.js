@@ -1,6 +1,7 @@
+// @flow
 import get from 'lodash/get';
 
-function getData(queryProps, key) {
+function getData(queryProps: Object, key) {
   if (!queryProps) {
     return {
       edges: [],
@@ -14,21 +15,21 @@ function getData(queryProps, key) {
   return get(queryProps, key);
 }
 
-export function hasPreviousPage(queryProps, key) {
+export function hasPreviousPage(queryProps: Object, key: string): boolean {
   const identifiedKey = key || identifyKey(queryProps);
 
   const data = getData(queryProps, identifiedKey);
   return typeof data.pageInfo !== typeof undefined && data.pageInfo.hasPreviousPage;
 }
 
-export function hasNextPage(queryProps, key) {
+export function hasNextPage(queryProps: Object, key: string): boolean {
   const identifiedKey = key || identifyKey(queryProps);
 
   const data = getData(queryProps, identifiedKey);
   return typeof data.pageInfo !== typeof undefined && data.pageInfo.hasNextPage;
 }
 
-export function createDataArray(queryProps, key) {
+export function createDataArray(queryProps: Object, key: string): Array<Object> {
   const identifiedKey = key || identifyKey(queryProps);
 
   const data = getData(queryProps, identifiedKey);
@@ -39,7 +40,7 @@ export function createDataArray(queryProps, key) {
   return data.edges.map(info => info.node);
 }
 
-export function identifyKey(queryProps) {
+export function identifyKey(queryProps: Object): ?string {
   if (!queryProps) {
     return null;
   }
