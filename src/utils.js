@@ -3,8 +3,8 @@ import get from 'lodash/get';
 
 import type { ConnectionData } from './interfaces';
 
-function getData(queryProps: Object, key): ConnectionData {
-  if (!queryProps) {
+function getConnectionData(data: Object, key): ConnectionData {
+  if (!data) {
     return {
       edges: [],
       pageInfo: {
@@ -14,36 +14,32 @@ function getData(queryProps: Object, key): ConnectionData {
     };
   }
 
-  return get(queryProps, key);
+  return get(data, key);
 }
 
-export function hasPreviousPage(queryProps: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(queryProps);
+export function hasPreviousPage(data: Object, key: string): boolean {
+  const identifiedKey = key || identifyKey(data);
 
-  const data = getData(queryProps, identifiedKey);
-  return typeof data.pageInfo !== typeof undefined && data.pageInfo.hasPreviousPage;
+  const { pageInfo } = getConnectionData(data, identifiedKey);
+  return typeof pageInfo !== typeof undefined && pageInfo.hasPreviousPage;
 }
 
-export function hasNextPage(queryProps: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(queryProps);
+export function hasNextPage(data: Object, key: string): boolean {
+  const identifiedKey = key || identifyKey(data);
 
-  const data = getData(queryProps, identifiedKey);
-  return typeof data.pageInfo !== typeof undefined && data.pageInfo.hasNextPage;
+  const { pageInfo } = getConnectionData(data, identifiedKey);
+  return typeof pageInfo !== typeof undefined && pageInfo.hasNextPage;
 }
 
-export function createDataArray(queryProps: Object, key: string): Array<Object> {
-  const identifiedKey = key || identifyKey(queryProps);
+export function createDataArray(data: Object, key: string): Array<Object> {
+  const identifiedKey = key || identifyKey(data);
 
-  const data = getData(queryProps, identifiedKey);
+  const { edges } = getConnectionData(data, identifiedKey);
+  return edges.map(info => info.node);
+}
+
+export function identifyKey(data: Object): ?string {
   if (!data) {
-    return [];
-  }
-
-  return data.edges.map(info => info.node);
-}
-
-export function identifyKey(queryProps: Object): ?string {
-  if (!queryProps) {
     return null;
   }
 
@@ -59,5 +55,5 @@ export function identifyKey(queryProps: Object): ?string {
     return arrayKeys;
   };
 
-  return walkPropsKeys(queryProps).join('.');
+  return walkPropsKeys(data).join('.');
 }
