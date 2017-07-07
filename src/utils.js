@@ -43,17 +43,17 @@ export function identifyKey(data: Object): ?string {
     return null;
   }
 
-  const walkPropsKeys = props => {
+  const walkKeys = props => {
     const key = Object.keys(props)[0];
     const arrayKeys = [key];
     const newProps = props[key];
 
     if (!newProps.edges) {
-      return arrayKeys.concat(walkPropsKeys(newProps));
+      return arrayKeys.concat(walkKeys(newProps));
     }
 
     return arrayKeys;
   };
 
-  return walkPropsKeys(data).join('.');
+  return walkKeys(data).join('.');
 }
