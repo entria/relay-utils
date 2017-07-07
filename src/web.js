@@ -1,7 +1,9 @@
 // @flow
 import React from 'react';
-import type { GraphQLTaggedNode, Variables, Environment } from 'react-relay';
 import { QueryRenderer } from 'react-relay';
+
+import type { ReactClass } from 'react'; // @TODO - eslint
+import type { GraphQLTaggedNode, Variables, Environment } from 'react-relay';
 
 type Config = {
   query: ?GraphQLTaggedNode,
@@ -18,30 +20,28 @@ export function createQueryRenderer(
 ): ReactClass<*> {
   const { query, queriesParams, variables, environment } = config;
 
-  class QueryRendererWrapper extends React.Component {
-    render() {
-      const queryVariables = queriesParams ? queriesParams(this.props) : variables;
+  const QueryRendererWrapper = wrapperProps => {
+    const queryVariables = queriesParams ? queriesParams(wrapperProps) : variables;
 
-      return (
-        <QueryRenderer
-          query={query}
-          variables={queryVariables}
-          environment={environment}
-          render={({ error, props }) => {
-            if (error) {
-              return <config.error error={error} />;
-            }
+    return (
+      <QueryRenderer
+        query={query}
+        variables={queryVariables}
+        environment={environment}
+        render={({ error, props }) => {
+          if (error) {
+            return <config.error error={error} />;
+          }
 
-            if (props) {
-              return <FragmentComponent {...this.props} {...props} />;
-            }
+          if (props) {
+            return <FragmentComponent {...wrapperProps} {...props} />;
+          }
 
-            return <config.loading />;
-          }}
-        />
-      );
-    }
-  }
+          return <config.loading />;
+        }}
+      />
+    );
+  };
 
   return QueryRendererWrapper;
 }
