@@ -1,7 +1,7 @@
 // @flow
 function isValidObject(data: any): boolean {
-  const isntNull = data !== null;
-  const isObject = isntNull && typeof data === 'object';
+  const isNotNull = data !== null;
+  const isObject = isNotNull && typeof data === 'object';
 
   return isObject && Object.keys(data).length > 0;
 }
