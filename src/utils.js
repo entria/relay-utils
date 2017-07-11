@@ -8,7 +8,7 @@ export function identifyKey(data: Object): ?string {
   const isNull = data === null;
   const isntObject = !isObject(data);
   const isEmpty = Object.keys(data).length === 0;
-  if (isUndefined || isNull | isntObject || isEmpty) {
+  if (isUndefined || isNull || isntObject || isEmpty) {
     return null;
   }
 
