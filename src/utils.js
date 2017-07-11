@@ -1,20 +1,30 @@
 // @flow
+function isObject(data: any): boolean {
+  return typeof data === 'object';
+}
+
 export function identifyKey(data: Object): ?string {
-  if (!data) {
+  if (!data || data === null || Object.keys(data).length === 0) {
     return null;
   }
 
-  const walkKeys = props => {
-    const key = Object.keys(props)[0];
-    const arrayKeys = [key];
-    const newProps = props[key];
+  const walkProps = (props, parentKeys = []) => {
+    const withEdges = Object.keys(props)
+      .filter(key => isObject(props[key]))
+      .map(key => {
+        const newProps = props[key];
+        const parentKeysAndMe = parentKeys.concat(key);
 
-    if (!newProps.edges) {
-      return arrayKeys.concat(walkKeys(newProps));
-    }
+        if (typeof newProps.edges !== 'undefined') {
+          return parentKeysAndMe.join('.');
+        }
 
-    return arrayKeys;
+        return walkProps(newProps, parentKeysAndMe);
+      })
+      .filter(key => key !== null);
+
+    return withEdges.length > 0 ? withEdges[0] : null;
   };
 
-  return walkKeys(data).join('.');
+  return walkProps(data);
 }

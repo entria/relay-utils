@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should return a property with edges (propTwo) 1`] = `"propTwo"`;
+
+exports[`should return a subproperty with edges (propTwo.subPropFour) 1`] = `"propTwo.subPropFour"`;
+
+exports[`should return null if data is an empty object 1`] = `null`;
+
+exports[`should return null if do not has edges 1`] = `null`;
+
+exports[`should return the first property with edges (propOne) 1`] = `"propOne"`;
