@@ -58,15 +58,15 @@
   },
   "pre-commit": "lint:staged",
   "scripts": {
+    "prepublish": "npm run build",
     "test": "jest --coverage --runInBand --forceExit",
     "test:watch": "jest --watch --coverage",
     "build": "babel src -d lib --ignore __tests__",
     "lint": "eslint --ext js src",
     "lint:staged": "lint-staged",
     "check": "npm run lint && npm run test",
-    "prerelease": "npm run check && npm run build && git add lib && git commit -m 'Update ./lib/'",
-    "release:patch": "npm run prerelease && npm version patch && git push --follow-tags && npm publish --access public",
-    "release:minor": "npm run prerelease && npm version minor && git push --follow-tags && npm publish --access public",
-    "release:major": "npm run prerelease && npm version major && git push --follow-tags && npm publish --access public"
+    "release:patch": "npm run check && npm version patch && git push --follow-tags && npm publish --access public",
+    "release:minor": "npm run check && npm version minor && git push --follow-tags && npm publish --access public",
+    "release:major": "npm run check && npm version major && git push --follow-tags && npm publish --access public"
   }
 }
