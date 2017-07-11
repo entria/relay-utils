@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should remove __dataID__ 1`] = `
+Object {
+  "deep": Object {
+    "value": 10,
+  },
+  "description": "description",
+  "name": "name",
+}
+`;

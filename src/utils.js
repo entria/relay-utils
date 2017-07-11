@@ -1,10 +1,10 @@
 // @flow
-function isValidObject(data: any): boolean {
+export const isValidObject = (data: any): boolean => {
   const isNotNull = data !== null;
   const isObject = isNotNull && typeof data === 'object';
 
   return isObject && Object.keys(data).length > 0;
-}
+};
 
 export function identifyKey(data: Object): ?string {
   if (!isValidObject(data)) {
