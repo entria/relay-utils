@@ -1,6 +1,6 @@
 import { identifyKey } from '../utils';
 
-it('should return null if data is an empty object', async () => {
+it('should return null if data is an empty object', () => {
   const data = {};
 
   const identifiedKey = identifyKey(data);
@@ -8,7 +8,7 @@ it('should return null if data is an empty object', async () => {
   expect(identifiedKey).toMatchSnapshot();
 });
 
-it('should return null if do not has edges', async () => {
+it('should return null if do not has edges', () => {
   const data = {
     propOne: {
       subPropOne: 'john',
@@ -25,7 +25,7 @@ it('should return null if do not has edges', async () => {
   expect(identifiedKey).toMatchSnapshot();
 });
 
-it('should return a property with edges (propTwo)', async () => {
+it('should return a property with edges (propTwo)', () => {
   const data = {
     propOne: {
       subPropOne: 'john',
@@ -41,14 +41,14 @@ it('should return a property with edges (propTwo)', async () => {
   expect(identifiedKey).toMatchSnapshot();
 });
 
-it('should return a subproperty with edges (propTwo.subPropFour)', async () => {
+it('should return a subproperty with edges (propTwo.subPropFour)', () => {
   const data = {
     propOne: {
       subPropOne: 'john',
       subPropTwo: 'doe',
     },
     propTwo: {
-      subPropThree: 'jane',
+      subPropThree: null,
       subPropFour: {
         edges: [],
       },
@@ -60,7 +60,7 @@ it('should return a subproperty with edges (propTwo.subPropFour)', async () => {
   expect(identifiedKey).toMatchSnapshot();
 });
 
-it('should return the first property with edges (propOne)', async () => {
+it('should return the first property with edges (propOne)', () => {
   const data = {
     propOne: {
       edges: [],

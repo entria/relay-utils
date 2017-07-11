@@ -1,20 +1,19 @@
 // @flow
-function isObject(data: any): boolean {
-  return typeof data === 'object';
+function isValidObject(data: any): boolean {
+  const isntNull = data !== null;
+  const isObject = isntNull && typeof data === 'object';
+
+  return isObject && Object.keys(data).length > 0;
 }
 
 export function identifyKey(data: Object): ?string {
-  const isUndefined = !data;
-  const isNull = data === null;
-  const isntObject = !isObject(data);
-  const isEmpty = Object.keys(data).length === 0;
-  if (isUndefined || isNull || isntObject || isEmpty) {
+  if (!isValidObject(data)) {
     return null;
   }
 
   const walkProps = (props, parentKeys = []) => {
     const withEdges = Object.keys(props)
-      .filter(key => isObject(props[key]))
+      .filter(key => isValidObject(props[key]))
       .map(key => {
         const newProps = props[key];
         const parentKeysAndMe = parentKeys.concat(key);
