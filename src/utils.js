@@ -1,59 +1,34 @@
 // @flow
-import get from 'lodash/get';
-
-import type { ConnectionData } from './interfaces';
-
-function getConnectionData(data: Object, key): ConnectionData {
-  if (!data) {
-    return {
-      edges: [],
-      pageInfo: {
-        hasPreviousPage: false,
-        hasNextPage: false,
-      },
-    };
-  }
-
-  return get(data, key);
-}
-
-export function hasPreviousPage(data: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(data);
-
-  const { pageInfo } = getConnectionData(data, identifiedKey);
-  return typeof pageInfo !== typeof undefined && pageInfo.hasPreviousPage;
-}
-
-export function hasNextPage(data: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(data);
-
-  const { pageInfo } = getConnectionData(data, identifiedKey);
-  return typeof pageInfo !== typeof undefined && pageInfo.hasNextPage;
-}
-
-export function createDataArray(data: Object, key: string): Array<Object> {
-  const identifiedKey = key || identifyKey(data);
-
-  const { edges } = getConnectionData(data, identifiedKey);
-  return edges.map(info => info.node);
+function isObject(data: any): boolean {
+  return typeof data === 'object';
 }
 
 export function identifyKey(data: Object): ?string {
-  if (!data) {
+  const isUndefined = !data;
+  const isNull = data === null;
+  const isntObject = !isObject(data);
+  const isEmpty = Object.keys(data).length === 0;
+  if (isUndefined || isNull | isntObject || isEmpty) {
     return null;
   }
 
-  const walkKeys = props => {
-    const key = Object.keys(props)[0];
-    const arrayKeys = [key];
-    const newProps = props[key];
+  const walkProps = (props, parentKeys = []) => {
+    const withEdges = Object.keys(props)
+      .filter(key => isObject(props[key]))
+      .map(key => {
+        const newProps = props[key];
+        const parentKeysAndMe = parentKeys.concat(key);
 
-    if (!newProps.edges) {
-      return arrayKeys.concat(walkKeys(newProps));
-    }
+        if (typeof newProps.edges !== 'undefined') {
+          return parentKeysAndMe.join('.');
+        }
 
-    return arrayKeys;
+        return walkProps(newProps, parentKeysAndMe);
+      })
+      .filter(key => key !== null);
+
+    return withEdges.length > 0 ? withEdges[0] : null;
   };
 
-  return walkKeys(data).join('.');
+  return walkProps(data);
 }

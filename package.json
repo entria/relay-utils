@@ -34,6 +34,7 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.48.0",
+    "jest": "^20.0.4",
     "lint-staged": "^4.0.0",
     "lodash": "^4.17.4",
     "pre-commit": "^1.2.2",
@@ -57,6 +58,8 @@
   },
   "pre-commit": "lint:staged",
   "scripts": {
+    "test": "jest --coverage --runInBand --forceExit",
+    "test:watch": "jest --watch --coverage",
     "build": "babel src -d lib",
     "lint": "eslint --ext js src",
     "lint:staged": "lint-staged",
