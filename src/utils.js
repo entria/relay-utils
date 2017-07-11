@@ -4,7 +4,11 @@ function isObject(data: any): boolean {
 }
 
 export function identifyKey(data: Object): ?string {
-  if (!data || data === null || Object.keys(data).length === 0) {
+  const isUndefined = !data;
+  const isNull = data === null;
+  const isntObject = !isObject(data);
+  const isEmpty = Object.keys(data).length === 0;
+  if (isUndefined || isNull | isntObject || isEmpty) {
     return null;
   }
 
