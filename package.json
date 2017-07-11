@@ -60,7 +60,7 @@
   "scripts": {
     "test": "jest --coverage --runInBand --forceExit",
     "test:watch": "jest --watch --coverage",
-    "build": "babel src -d lib",
+    "build": "babel src -d lib --ignore __tests__",
     "lint": "eslint --ext js src",
     "lint:staged": "lint-staged",
     "check": "npm run lint && npm run test",
