@@ -45,5 +45,9 @@ export function createDataArray(data: Object, key: string): Array<Object> {
   }
 
   const { edges } = getConnectionData(data, identifiedKey);
+  if (!Array.isArray(edges)) {
+    return [];
+  }
+
   return edges.map(info => info.node);
 }
