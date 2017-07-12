@@ -1,5 +1,6 @@
 /* @flow */
 import { removeDataID } from '../dataID';
+
 it('should remove __dataID__', () => {
   const data = {
     __dataID__: '123',
