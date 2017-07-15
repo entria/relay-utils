@@ -1,6 +1,6 @@
 {
   "name": "@entria/relay-utils",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Relay utility methods",
   "keywords": [
     "react",
