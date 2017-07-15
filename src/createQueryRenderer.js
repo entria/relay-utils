@@ -29,9 +29,9 @@ export default function createQueryRenderer(
         query={query}
         variables={queryVariables}
         environment={environment}
-        render={({ error, props }) => {
+        render={({ error, retry, props }) => {
           if (error) {
-            return <config.error error={error} />;
+            return <config.error error={error} retry={retry} />;
           }
 
           if (props) {
