@@ -1,8 +1,9 @@
 // @flow
+
 import React from 'react';
 import { QueryRenderer } from 'react-relay';
 
-import type { ReactClass } from 'react'; // @TODO - eslint
+import type { ReactClass } from 'react';
 import type { GraphQLTaggedNode, Variables, Environment } from 'react-relay';
 
 type Config = {
@@ -14,7 +15,7 @@ type Config = {
   error: ReactClass<*>,
 };
 
-export function createQueryRenderer(
+export default function createQueryRenderer(
   FragmentComponent: ReactClass<*>,
   config: Config,
 ): ReactClass<*> {
