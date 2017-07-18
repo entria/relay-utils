@@ -4,18 +4,20 @@ import get from 'lodash/get';
 import type { ConnectionData } from './interfaces';
 import { identifyKey } from './utils';
 
+const defaultConnectionData = {
+  edges: [],
+  pageInfo: {
+    hasPreviousPage: false,
+    hasNextPage: false,
+  },
+};
+
 function getConnectionData(data: Object, key): ConnectionData {
   if (!data) {
-    return {
-      edges: [],
-      pageInfo: {
-        hasPreviousPage: false,
-        hasNextPage: false,
-      },
-    };
+    return defaultConnectionData;
   }
 
-  return get(data, key);
+  return get(data, key) || defaultConnectionData;
 }
 
 export function hasPreviousPage(data: Object, key: string): boolean {
