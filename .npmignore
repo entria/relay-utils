@@ -3,3 +3,8 @@ npm-debug.log
 node_modules
 .idea
 coverage
+src
+.babelrc
+.eslintrc
+.flowconfig
+.gitignore
