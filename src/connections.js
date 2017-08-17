@@ -2,7 +2,6 @@
 import get from 'lodash/get';
 
 import type { ConnectionData } from './interfaces';
-import { identifyKey } from './utils';
 
 const defaultConnectionData = {
   edges: [],
@@ -21,32 +20,23 @@ function getConnectionData(data: Object, key): ConnectionData {
 }
 
 export function hasPreviousPage(data: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(data);
-  if (identifiedKey === null) {
-    return false;
-  }
+  if (!key) return false;
 
-  const { pageInfo } = getConnectionData(data, identifiedKey);
-  return typeof pageInfo !== typeof undefined && pageInfo.hasPreviousPage;
+  const { pageInfo } = getConnectionData(data, key);
+  return pageInfo != null && pageInfo.hasPreviousPage;
 }
 
 export function hasNextPage(data: Object, key: string): boolean {
-  const identifiedKey = key || identifyKey(data);
-  if (identifiedKey === null) {
-    return false;
-  }
+  if (!key) return false;
 
-  const { pageInfo } = getConnectionData(data, identifiedKey);
-  return typeof pageInfo !== typeof undefined && pageInfo.hasNextPage;
+  const { pageInfo } = getConnectionData(data, key);
+  return pageInfo != null && pageInfo.hasNextPage;
 }
 
 export function createDataArray(data: Object, key: string): Array<Object> {
-  const identifiedKey = key || identifyKey(data);
-  if (identifiedKey === null) {
-    return [];
-  }
+  if (!key) return [];
 
-  const { edges } = getConnectionData(data, identifiedKey);
+  const { edges } = getConnectionData(data, key);
   if (!Array.isArray(edges)) {
     return [];
   }
